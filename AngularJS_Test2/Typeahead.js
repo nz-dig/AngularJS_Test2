@@ -51,14 +51,16 @@ angular.module('ui.bootstrap.demo').controller('TypeaheadCtrl', function ($scope
             }
         }).then(function (response) {
           
-            //var match1 = $filter('filter')(response.data, { name: val });
+            var matches = $filter('filter')(response.data, { name: val },
+               function (actual, expected) { return angular.equals(actual.toLowerCase(), expected.toLowerCase()) });
 
             //var match2 = $filter('filter')(response.data, $scope.criteriaMatch(val));
 
-            var matches = $filter('filter')(response.data,  
-                 function( item ) {
-                     return angular.equals(item.name.toLowerCase(), val.toLowerCase());
-            });
+            //var match3 = $filter('filter')(response.data,  
+            //     function( item ) {
+            //         return angular.equals(item.name.toLowerCase(), val.toLowerCase());
+            //     });
+
                        
             //if (response.data.indexOf(val) === -1) {
             //    response.data.unshift({ name: val });
