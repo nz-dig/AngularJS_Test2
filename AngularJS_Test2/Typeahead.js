@@ -51,38 +51,21 @@ angular.module('ui.bootstrap.demo').controller('TypeaheadCtrl', function ($scope
             }
         }).then(function (response) {
           
+            //var match1 = $filter('filter')(response.data, { name: val });
 
-            //var match = $filter('filter')(response.data, function (resultItem) {
-            //    return $scope.matchTest(resultItem, val);
-            //});
-            var match1 = $filter('filter')(response.data, { name: val });
+            //var match2 = $filter('filter')(response.data, $scope.criteriaMatch(val));
 
-            var match2 = $filter('filter')(response.data, $scope.criteriaMatch(val));
-
-            var match3 = $filter('filter')(response.data,  function( val ) {
-                return function( item ) {
-                    return angular.equals(item.name.toLowerCase(), val.toLowerCase());
-                };
+            var matches = $filter('filter')(response.data,  
+                 function( item ) {
+                     return angular.equals(item.name.toLowerCase(), val.toLowerCase());
             });
-
-         
-
-         
-
-            //alert(response.data[0].name)
-            //var matchItem =  response.data.filter(function(friend) {
-            //    return friend.name.match(query) != null;
-            //});
-
-            //var matchItem = response.data.filter(function (resultItem) {
-            //    return $scope.matchTest(resultItem,val);
-            //});
-            if (response.data.indexOf(val) === -1) {
-                response.data.unshift({ name: val });
-            }
-            //if (matches.length === 0) {
+                       
+            //if (response.data.indexOf(val) === -1) {
             //    response.data.unshift({ name: val });
             //}
+            if (matches.length === 0) {
+                response.data.unshift({ name: val });
+            }
 
             return response.data;
         });
